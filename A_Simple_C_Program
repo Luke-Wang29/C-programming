@@ -1,0 +1,91 @@
+/*
+Name: A program for storing variables in an appropriate format, arithmetical operation, number system conversion, unit conversion and solving quadratic equations
+Copy right: Free
+Author:Wang Yubo
+Description: This program can read full name,a 11-digit integer, float and 2-digit decimal number in appropriate variables. Also, for the 11-digit number,
+			 it can divide the first 6 figure of number by the last 5 numbers. It is able to convert numbers read from keyboard from decimal to the octal 
+			 and hexadecimal format. In addition, it can convert degrees Calsius to degrees Fahrenheit and degree Kelvin. When entering real number a, b, c,
+			 it can judge whether there is any roots and solve the problem by the way.
+
+*/
+
+#include<stdio.h>//include standard library stdio.h for use of scanf() and printf()
+#include<math.h> 
+int main(void)   //define a function named main
+{
+	char name[40];                  //declare a variable of type of char and set the size of the array to 40
+	long long int  num, num1, num2; //declare three variables of type of long long integar namely num, num1, num2
+	int x;                          //declare a variable of type of integar namely x
+	float fah, kel, cel, a, b, c;   //declare six variables of type of float namely fah, kel, cel, a, b, c
+
+
+	/*program of storing name*/
+	printf(" Please enter your full name without space character:\n"); // An interface to read name from keyboard
+	scanf("%s", &name);                                                // obtain the character and store it in 'name'
+	printf("%s,welcome to use this programme\n ", name);               //print the conclusion on the screen
+	
+
+	/*program of storing a 11-digit number and divide the first 6 figure of number by the last 5 numbers*/
+	printf("\nPlease enter the 11 digits telephone number:\n ");//interface to make users enter numbers
+	scanf_s("%lld", &num);                                      // capture and store the number. Considered the length of the number, the usage of long long int is reasonable
+	while (num <= 9999999999 || num>99999999999)                //loop statement is used to limit the number entered is 11 digit 
+	{
+		printf("Error! Please enter again:\n");                 // warning for error input
+		scanf_s("%lld", &num);
+	}
+	num1 = num / 100000;// to select the first 6 numbers from the 11 digit number
+	num2 = num % 100000;// to select the last 5 numbers from the 11 digit number
+	printf("The value of the last 5 figures divided by the first 6 figure is %.2lf\n", 1.0*num1 / num2);// display the conclusion on the screen
+
+
+	/*program of storing a 2-digit number read from keyboard and converting it from decimal to the octal and hexadecimal format*/
+	printf("\nPlease enter a 2-digit decimal number:\n");// gain and store the 2 digit decimal number
+	if (scanf("%d", &x) != 1)                            // store the value users entered into x
+		exit(0);                                         //to test the return value and make sure user enters correct form or variables
+	printf("The octal format of %d is %o\n", x, x);      // the following statement is used to display octal and hexadecimal format
+	printf("The hexiadecimal format of %d is %x\n", x, x);
+
+
+	/*program of converting degrees calsius to degrees fahrenheit and degree kelvin*/
+	printf("\nPlease enter the tempreture in degrees Celsius:\n");
+	if (scanf("%f", &cel) != 1)//store the value users entered into cel
+		exit(0);        // to test the return value and make sure user enters correct form or variables
+	fah = cel*1.8 + 32;//compute the fahrenheit degree according to the formula
+	kel = cel + 273.15;//compute the kelvin degree according to the formula
+	printf("The degree Fahrenheit of %.2f℃ is %.0f℉\n",cel, fah);// to display the degree on Fahrenheit format
+	printf("The degree Kelvin of %.2f℃is %.0fK\n", cel,kel);      // to display the degree on Kelvin format
+
+
+	/*program of solving quadratic equations*/
+	printf("\nplease enter the value of a\n");
+	while (!scanf_s("%f", &a))
+	{
+		fflush(stdin);                           // to flush the steam buffer so that a can be reassigned
+		printf("\nError! Please enter again:\n");//to judge whether the user entered wrong format
+	}
+	while (a == 0)                               //to judge whether the user make variable a to 0
+	{
+		printf("\nIt's invalid.Please enter again:\n");// let user correct their input
+		scanf("%f", &a);
+	}
+		printf("please enter the value of b\n");
+	while (!scanf_s("%f", &b))
+	{
+		fflush(stdin);
+		printf("\nError! Please enter again:\n");
+	}
+	printf("please enter the value of c\n");
+	while (!scanf_s("%f", &c))
+	{
+		fflush(stdin);
+		printf("\nError! Please enter again:\n");
+	}   
+	if (b*b < 4 * a*c)// according to the formula of quadratic equations, when b^2<4*a*c, there is no real root
+		printf("There is no real root\n");
+	else
+	if (b*b == 4 * a*c)
+		printf("There are two equal roots\n x1=x2=%.2f\n", (-b / 2 * a));// according to the formula of quadratic equations, when b^2=4*a*c, there are two equal roots
+	else
+		printf("There are two real roots\nx1=%.2f\t x2=%.2f\n", ((-b) - sqrt(b*b - 4 * a*c)) / 2 * a, ((-b) + sqrt(b*b - 4 * a*c)) / 2 * a);// according to the formula of quadratic equations, when b^2>4*a*c, there are two unequal roots.
+	return 0;
+}
